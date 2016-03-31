@@ -67,5 +67,8 @@
   (add-hook 'clojure-mode-hook #'idle-highlight-mode))
 
 (use-package paredit
-  :diminish paredit-mode  
-  :ensure t)
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+    (add-hook 'clojure-mode-hook 'paredit-mode))
+  :bind (("\M-)" . paredit-close-round-and-newline)))
