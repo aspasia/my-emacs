@@ -12,8 +12,20 @@
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  Functions
 
-;; Color themes
+(defun my/setup-cider ()
+  (lambda ()
+    (setq cider-history-file "~/.nrepl-history"
+          cider-hide-special-buffers t
+          cider-repl-history-size 10000
+          cider-prefer-local-resources t
+          cider-popup-stacktraces-in-repl t)
+    (paredit-mode 1)
+    (eldoc-mode 1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Color themes
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
 (load-theme 'noctilux t)
 
@@ -41,10 +53,25 @@
 (global-set-key "\M-n" 'scroll-up-line)
 (global-set-key "\M-p" 'scroll-down-line)
 
+;; To find lein
+;; http://stackoverflow.com/questions/13671839/cant-launch-lein-repl-in-emacs
+(add-to-list 'exec-path "/usr/local/bin")
+
+;; buffer list to appear on active window
+;; http://stackoverflow.com/questions/1231188/emacs-list-buffers-behavior
+(global-set-key "\C-x\C-b" 'buffer-menu)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
 ;; Use packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (setq exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-initialize))
 
 (use-package recentf
   :config
@@ -70,5 +97,13 @@
   :init
   (progn
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-    (add-hook 'clojure-mode-hook 'paredit-mode))
-  :bind (("\M-)" . paredit-close-round-and-newline)))
+    (add-hook 'clojure-mode-hook 'paredit-mode)))
+
+(use-package cider
+  :ensure cider
+  :init
+  (setq cider-words-of-inspiration '("NREPL is ready!!"))
+  (progn
+    (add-hook 'cider-mode-hook 'my/setup-cider)
+    (add-hook 'cider-repl-mode-hook 'my/setup-cider)))
+
