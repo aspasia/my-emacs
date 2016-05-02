@@ -78,7 +78,13 @@
   (recentf-mode)
   (setq recentf-exclude '(".ido.last")
         recentf-max-saved-items 1000)
-  :bind (("C-x f" . recentf-open-files)))
+  (defun ido-recentf-open ()
+    "Use `ido-completing-read' to \\[find-file] a recent file"
+    (interactive)
+    (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+        (message "Opening file...")
+      (message "Aborting")))
+  :bind (("C-x f" . ido-recentf-open)))
 
 (use-package clojure-mode
   :ensure t
@@ -107,3 +113,23 @@
     (add-hook 'cider-mode-hook 'my/setup-cider)
     (add-hook 'cider-repl-mode-hook 'my/setup-cider)))
 
+(use-package winner                     ; Undo and redo window configurations
+  :init (winner-mode)
+  :bind (("C-c b" . winner-undo)
+         ("C-c f" . winner-redo)))
+
+;; Autocomplete
+(use-package ido
+  :init (progn (ido-mode 1)
+               (ido-everywhere 1))
+  :config
+  (progn
+    (setq ido-case-fold t)
+    (setq ido-everywhere t)
+    (setq ido-enable-prefix nil)
+    (setq ido-enable-flex-matching t)
+    (setq ido-create-new-buffer 'always)
+    (setq ido-max-prospects 10)
+    (setq ido-use-faces nil)
+    ;(setq ido-file-extensions-order '(".rb" ".el" ".coffee" ".js"))
+    (add-to-list 'ido-ignore-files "\\.DS_Store")))
