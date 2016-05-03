@@ -24,6 +24,11 @@
     (paredit-mode 1)
     (eldoc-mode 1)))
 
+(defun save-as (new-filename)
+ (interactive "FFilename:")
+ (write-region (point-min) (point-max) new-filename)
+ (find-file-noselect new-filename))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Color themes
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
@@ -103,7 +108,8 @@
   :init
   (progn
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-    (add-hook 'clojure-mode-hook 'paredit-mode)))
+    (add-hook 'clojure-mode-hook 'paredit-mode)
+    (add-hook 'cider-repl-mode-hook 'paredit-mode)))
 
 (use-package cider
   :ensure cider
@@ -123,6 +129,7 @@
   :init (progn (ido-mode 1)
                (ido-everywhere 1))
   :config
+  (icomplete-mode +1)
   (progn
     (setq ido-case-fold t)
     (setq ido-everywhere t)
@@ -131,5 +138,6 @@
     (setq ido-create-new-buffer 'always)
     (setq ido-max-prospects 10)
     (setq ido-use-faces nil)
+    (setq ido-default-file-method 'selected-window)
     ;(setq ido-file-extensions-order '(".rb" ".el" ".coffee" ".js"))
     (add-to-list 'ido-ignore-files "\\.DS_Store")))
