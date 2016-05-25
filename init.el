@@ -69,6 +69,9 @@
 ;; http://stackoverflow.com/questions/1231188/emacs-list-buffers-behavior
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
+;; Change the key binding for delete identation
+(global-set-key "\M-\\" 'delete-indentation)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Use packages
