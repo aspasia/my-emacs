@@ -29,7 +29,8 @@
           cider-prefer-local-resources t
           cider-popup-stacktraces-in-repl t)
     (paredit-mode 1)
-    (eldoc-mode 1)))
+    (eldoc-mode 1)
+    (cider-turn-on-eldoc-mode)))
 
 (defun save-as (new-filename)
  (interactive "FFilename:")
