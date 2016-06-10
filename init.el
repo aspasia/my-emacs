@@ -131,3 +131,10 @@
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
     (add-hook 'clojure-mode-hook 'paredit-mode)
     (add-hook 'cider-repl-mode-hook 'paredit-mode)))
+
+(use-package rainbow-delimiters
+  :ensure
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook (lambda()
+                      (rainbow-delimiters-mode t)))))
