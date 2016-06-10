@@ -52,6 +52,9 @@
 ;; Always show column numbers.
 (setq-default column-number-mode t)
 
+;; highlight matching parens
+(show-paren-mode 1)
+
 ;; Display full pathname for files.
 (add-hook 'find-file-hooks
           '(lambda ()
