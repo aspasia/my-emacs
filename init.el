@@ -29,8 +29,7 @@
           cider-prefer-local-resources t
           cider-popup-stacktraces-in-repl t)
     (paredit-mode 1)
-    (eldoc-mode 1)
-    (cider-turn-on-eldoc-mode)))
+    (eldoc-mode 1)))
 
 (defun save-as (new-filename)
  (interactive "FFilename:")
@@ -111,8 +110,7 @@
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'eldoc-mode)
-  (add-hook 'clojure-mode-hook #'idle-highlight-mode))
+  (add-hook 'clojure-mode-hook #'eldoc-mode))
 
 (use-package cider
   :ensure cider
@@ -120,7 +118,9 @@
   (setq cider-words-of-inspiration '("NREPL is ready!!"))
   (progn
     (add-hook 'cider-mode-hook 'my/setup-cider)
-    (add-hook 'cider-repl-mode-hook 'my/setup-cider))
+    (add-hook 'cider-repl-mode-hook 'my/setup-cider)
+    (add-hook 'cider-mode-hook #'eldoc-mode)
+    (add-hook 'cider-repl-mode-hook #'eldoc-mode))
   :bind (("TAB" . complete-symbol)))
 
 (use-package winner                     ; Undo and redo window configurations
