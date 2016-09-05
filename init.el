@@ -51,6 +51,9 @@
 ;; Always show column numbers.
 (setq-default column-number-mode t)
 
+;; highlight matching parens
+(show-paren-mode 1)
+
 ;; Display full pathname for files.
 (add-hook 'find-file-hooks
           '(lambda ()
@@ -107,8 +110,7 @@
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'eldoc-mode)
-  (add-hook 'clojure-mode-hook #'idle-highlight-mode))
+  (add-hook 'clojure-mode-hook #'eldoc-mode))
 
 (use-package cider
   :ensure cider
@@ -116,7 +118,9 @@
   (setq cider-words-of-inspiration '("NREPL is ready!!"))
   (progn
     (add-hook 'cider-mode-hook 'my/setup-cider)
-    (add-hook 'cider-repl-mode-hook 'my/setup-cider))
+    (add-hook 'cider-repl-mode-hook 'my/setup-cider)
+    (add-hook 'cider-mode-hook #'eldoc-mode)
+    (add-hook 'cider-repl-mode-hook #'eldoc-mode))
   :bind (("TAB" . complete-symbol)))
 
 (use-package winner                     ; Undo and redo window configurations
@@ -130,3 +134,44 @@
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
     (add-hook 'clojure-mode-hook 'paredit-mode)
     (add-hook 'cider-repl-mode-hook 'paredit-mode)))
+
+(use-package rainbow-delimiters
+  :ensure
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook (lambda()
+                      (rainbow-delimiters-mode t)))))
+;; highlight, navigate and edit symbols
+(use-package auto-highlight-symbol
+  :ensure t
+  :diminish ""
+  :init
+  (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
+  :config
+  (progn
+    (global-auto-highlight-symbol-mode +1)
+    (set-face-attribute 'ahs-face nil
+			:bold nil
+			:underline t
+			:background nil)
+    (set-face-attribute 'ahs-definition-face nil
+			:underline t
+			:bold t
+			:background nil)
+    (setq ahs-default-range 'ahs-range-whole-buffer
+	  ahs-include "^[0-9A-Za-z/_.,:;*+=&%|$#@!^?>-]+$"
+	  ahs-select-invisible 'temporary
+	  ahs-idle-interval 0.25)
+    (bind-keys
+     :map auto-highlight-symbol-mode-map
+     ("M-<left>" . nil)
+     ("M-<right>" . nil)
+     ("M-F" . ahs-forward)
+     ("M-B" . ahs-backward)
+     ("s-e" . ahs-edit-mode)
+     ("s-f" . ahs-forward)
+     ("s-F" . ahs-forward-definition)
+     ("s-b" . ahs-backward)
+     ("s-B" . ahs-backward-definition)
+     ("M-E" . ahs-edit-mode))))
+
