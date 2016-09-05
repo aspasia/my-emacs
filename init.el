@@ -141,3 +141,37 @@
   (progn
     (add-hook 'emacs-lisp-mode-hook (lambda()
                       (rainbow-delimiters-mode t)))))
+;; highlight, navigate and edit symbols
+(use-package auto-highlight-symbol
+  :ensure t
+  :diminish ""
+  :init
+  (add-hook 'prog-mode-hook 'auto-highlight-symbol-mode)
+  :config
+  (progn
+    (global-auto-highlight-symbol-mode +1)
+    (set-face-attribute 'ahs-face nil
+			:bold nil
+			:underline t
+			:background nil)
+    (set-face-attribute 'ahs-definition-face nil
+			:underline t
+			:bold t
+			:background nil)
+    (setq ahs-default-range 'ahs-range-whole-buffer
+	  ahs-include "^[0-9A-Za-z/_.,:;*+=&%|$#@!^?>-]+$"
+	  ahs-select-invisible 'temporary
+	  ahs-idle-interval 0.25)
+    (bind-keys
+     :map auto-highlight-symbol-mode-map
+     ("M-<left>" . nil)
+     ("M-<right>" . nil)
+     ("M-F" . ahs-forward)
+     ("M-B" . ahs-backward)
+     ("s-e" . ahs-edit-mode)
+     ("s-f" . ahs-forward)
+     ("s-F" . ahs-forward-definition)
+     ("s-b" . ahs-backward)
+     ("s-B" . ahs-backward-definition)
+     ("M-E" . ahs-edit-mode))))
+
