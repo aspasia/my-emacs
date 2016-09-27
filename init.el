@@ -62,7 +62,7 @@
 ;; For easy window scrolling up and down.
 (global-set-key "\M-n" 'scroll-up-line)
 (global-set-key "\M-p" 'scroll-down-line)
-(global-set-key "\M-F" 'indent-for-tab-command)
+(global-set-key "\M-A" 'indent-for-tab-command)
 
 ;; To find lein
 ;; http://stackoverflow.com/questions/13671839/cant-launch-lein-repl-in-emacs
