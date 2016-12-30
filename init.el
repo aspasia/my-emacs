@@ -55,6 +55,7 @@
 
 ;; Always show column numbers.
 (setq-default column-number-mode t)
+(global-linum-mode 1)
 
 ;; highlight matching parens
 (show-paren-mode 1)
