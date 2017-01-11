@@ -81,6 +81,9 @@
 ;; Change the key binding for delete identation
 (global-set-key "\M-\\" 'delete-indentation)
 
+;; ERC
+(setq erc-auto-query 'window-noselect)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Use packages
