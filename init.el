@@ -188,3 +188,31 @@
      ("s-B" . ahs-backward-definition)
      ("M-E" . ahs-edit-mode))))
 
+(use-package helm
+  :ensure t
+  :bind (("M-y" . helm-show-kill-ring)
+	 ("C-x C-b" . helm-buffers-list)
+	 ("C-c h o" . helm-occur)
+	 ("C-c h f" . helm-find-files)
+	 ("C-c h r" . helm-regexp)
+	 ("C-c h m" . helm-mark-ring)
+	 ("C-c h x" . helm-M-x)
+	 ("C-c h a" . helm-ag)
+         ("C-c C-f" . helm-do-ag)
+	 ("C-c h b" . helm-buffers-list)
+	 ("C-c h i" . helm-imenu))
+  :config
+  (progn
+    (require 'helm-config)
+    (require 'helm-ring)
+    (require 'helm-source)
+    (require 'helm-adaptive)
+    (use-package helm-ag :ensure t)
+    (setq helm-split-window-default-side 'below
+	  helm-split-window-in-side-p t
+	  helm-move-to-line-cycle-in-source t
+	  helm-display-header-line nil
+	  helm-candidate-separator "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
+    (helm-autoresize-mode +1)))
+
+;; TODO Projectile
