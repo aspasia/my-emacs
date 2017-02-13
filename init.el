@@ -84,6 +84,9 @@
 ;; ERC
 (setq erc-auto-query 'window-noselect)
 
+;; Get rid of "text read only" error when trying to edit with helm
+(setq inhibit-read-only t) 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Use packages
