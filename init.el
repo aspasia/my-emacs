@@ -8,6 +8,10 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
+;; Refresh repos
+(unless package-archive-contents
+  (package-refresh-contents))
+
 ;; make sure we can use packages
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
