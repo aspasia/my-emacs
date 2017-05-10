@@ -209,7 +209,7 @@
 	 ("C-c h m" . helm-mark-ring)
 	 ("C-c h x" . helm-M-x)
 	 ("C-c h a" . helm-ag)
-         ("C-c C-f" . helm-do-ag)
+         ("C-c h t" . helm-do-ag)
 	 ("C-c h b" . helm-buffers-list)
 	 ("C-c h i" . helm-imenu))
   :config
