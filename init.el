@@ -3,9 +3,13 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+
+(when (>= emacs-major-version 24)
+  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                           ("gnu" . "http://elpa.gnu.org/packages/")
+                           ("melpa-stable" . "http://stable.melpa.org/packages/")
+                           ("marmalade" . "http://marmalade-repo.org/packages/"))))
+
 (package-initialize)
 
 ;; Refresh repos
