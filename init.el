@@ -227,3 +227,5 @@
     (helm-autoresize-mode +1)))
 
 ;; TODO Projectile
+(use-package magit
+  :ensure t)
