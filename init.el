@@ -8,22 +8,31 @@
   (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                            ("gnu" . "http://elpa.gnu.org/packages/")
                            ("melpa-stable" . "http://stable.melpa.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/"))))
-
-(package-initialize)
+                           ("marmalade" . "http://marmalade-repo.org/packages/")
+                           ("org" . "https://orgmode.org/elpa/")
+                           ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
 
 ;; Refresh repos
 (unless package-archive-contents
   (package-refresh-contents))
+
+(setq package-load-list '(all))     ;; List of packages to load
+
+(package-initialize)
+
+(unless (package-installed-p 'org)  ;; Make sure the Org package is
+  (package-install 'org))           ;; installed, install it if not
 
 ;; make sure we can use packages
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
+(package-initialize)
+
 ;; only use use-package.el at compile-time
 (eval-when-compile
-  (require 'use-package))
+(require 'use-package))
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
@@ -229,3 +238,24 @@
 ;; TODO Projectile
 (use-package magit
   :ensure t)
+
+;;ORG mode
+;; The following lines are always needed. Choose your own keys.
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-cb" 'org-switchb)
+
+(setq python-shell-interpreter "python"
+      python-shell-interpreter-args "-i")
+
+;; PYTHON STUFFS
+(use-package python
+  :ensure t
+  :defer t
+  :mode ("\\.py\\'" . python-mode))
+
+(use-package elpy
+  :ensure t
+  :after python
+  :config (elpy-enable))
