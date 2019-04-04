@@ -132,7 +132,8 @@
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode))
+         ("\\.edn\\'" . clojure-mode)
+         ("\\.spec\\'" . clojure-mode))
   :init
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'linum-mode)
