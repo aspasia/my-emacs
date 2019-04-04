@@ -266,7 +266,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (markdown-mode use-package rainbow-delimiters paredit magit helm-ag exec-path-from-shell elpy cider auto-highlight-symbol))))
+    (flycheck-joker markdown-mode use-package rainbow-delimiters paredit magit helm-ag exec-path-from-shell elpy cider auto-highlight-symbol))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -282,3 +282,25 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package flycheck-joker
+  :ensure t
+  :init (global-flycheck-mode))
+
+;; el-get
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+;(el-get 'sync)
+
+;; flycheck-kondo
+(el-get-bundle flycheck-clj-kondo
+  :url "https://raw.githubusercontent.com/borkdude/flycheck-clj-kondo/master/flycheck-clj-kondo.el"
+  (require 'flycheck-clj-kondo))
