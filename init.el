@@ -305,3 +305,8 @@
 (el-get-bundle flycheck-clj-kondo
   :url "https://raw.githubusercontent.com/borkdude/flycheck-clj-kondo/master/flycheck-clj-kondo.el"
   (require 'flycheck-clj-kondo))
+
+(dolist (checkers '((clj-kondo-clj . clojure-joker)
+                    (clj-kondo-cljs . clojurescript-joker)
+                    (clj-kondo-cljc . clojure-joker)))
+  (flycheck-add-next-checker (car checkers) (cons 'error (cdr checkers))))
