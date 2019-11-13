@@ -129,11 +129,16 @@
       (message "Aborting")))
   :bind (("C-x f" . ido-recentf-open)))
 
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package clojure-mode
   :ensure t
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.edn\\'" . clojure-mode)
          ("\\.spec\\'" . clojure-mode))
+  :config
+  (require 'flycheck-clj-kondo)
   :init
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'linum-mode)
@@ -299,14 +304,3 @@
     (eval-print-last-sexp)))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
-;(el-get 'sync)
-
-;; flycheck-kondo
-(el-get-bundle flycheck-clj-kondo
-  :url "https://raw.githubusercontent.com/borkdude/flycheck-clj-kondo/master/flycheck-clj-kondo.el"
-  (require 'flycheck-clj-kondo))
-
-(dolist (checkers '((clj-kondo-clj . clojure-joker)
-                    (clj-kondo-cljs . clojurescript-joker)
-                    (clj-kondo-cljc . clojure-joker)))
-  (flycheck-add-next-checker (car checkers) (cons 'error (cdr checkers))))
