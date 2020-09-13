@@ -260,26 +260,6 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-switchb)
 
-;; JOCKER
-(use-package elpy
-  :ensure t
-  :after python
-  :config (elpy-enable))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (flycheck-joker markdown-mode use-package rainbow-delimiters paredit magit helm-ag exec-path-from-shell elpy cider auto-highlight-symbol))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-
 ;; MARKDOWN
 (use-package markdown-mode
   :ensure t
@@ -305,8 +285,30 @@
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
-;; PYTHON STUFFS
+;; --------------- PYTHON STUFFS
+;; The package is "python" but the mode is "python-mode":
 (use-package python
+  :mode ("\\.py\\'" . python-mode)
+;  :interpreter ("python3" . python-mode)
+  :init
+  (setq python-shell-interpreter "/Library/Frameworks/Python.framework/Versions/3.8/bin/python3"))
+
+;; Python editing
+(use-package elpy
   :ensure t
-  :defer t
-  :mode ("\\.py\\'" . python-mode))
+  :after python
+  :config (elpy-enable))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (flycheck-joker markdown-mode use-package rainbow-delimiters paredit magit helm-ag exec-path-from-shell elpy cider auto-highlight-symbol))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
