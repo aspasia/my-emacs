@@ -263,12 +263,6 @@
 (setq python-shell-interpreter "python"
       python-shell-interpreter-args "-i")
 
-;; PYTHON STUFFS
-(use-package python
-  :ensure t
-  :defer t
-  :mode ("\\.py\\'" . python-mode))
-
 (use-package elpy
   :ensure t
   :after python
@@ -312,3 +306,9 @@
     (eval-print-last-sexp)))
 
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
+
+;; PYTHON STUFFS
+(use-package python
+  :ensure t
+  :defer t
+  :mode ("\\.py\\'" . python-mode))
