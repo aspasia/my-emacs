@@ -260,9 +260,6 @@
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-switchb)
 
-(setq python-shell-interpreter "python"
-      python-shell-interpreter-args "-i")
-
 (use-package elpy
   :ensure t
   :after python
