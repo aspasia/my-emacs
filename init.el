@@ -145,7 +145,15 @@
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'clojure-mode-hook #'eldoc-mode))
+  (add-hook 'clojure-mode-hook #'eldoc-mode)
+  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
+
+(setq-default
+   clojure-indent-style :always-align
+   evil-want-Y-yank-to-eol nil
+   neo-confirm-create-directory (quote off-p)
+   neo-confirm-create-file (quote off-p)
+   neo-theme (quote nerd))
 
 (use-package paredit
   :ensure t
