@@ -32,7 +32,17 @@
 
 ;; only use use-package.el at compile-time
 (eval-when-compile
-(require 'use-package))
+  (require 'use-package))
+
+;; FIX: Install diminish and bind-key via use-package BEFORE requiring them.
+;; Previously these were bare (require ...) calls which fail if the packages
+;; aren't already on disk.
+(use-package diminish
+  :ensure t)
+
+(use-package bind-key
+  :ensure t)
+
 (require 'diminish)                ;; if you use :diminish
 (require 'bind-key)                ;; if you use any :bind variant
 
@@ -62,9 +72,6 @@
 ;;
 ;; Generic config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Uncomment the next line if you'd like to stop Emacs from
-;; automatically creating and leaving "foo~" backup files
-;; all over the place.
 (setq make-backup-files nil)
 
 ;; Spaces only (no tab characters at all)!
@@ -72,7 +79,10 @@
 
 ;; Always show column numbers.
 (setq-default column-number-mode t)
-(global-linum-mode 1)
+;; global-linum-mode was removed in Emacs 29; use display-line-numbers-mode instead
+(if (fboundp 'global-display-line-numbers-mode)
+    (global-display-line-numbers-mode 1)
+  (global-linum-mode 1))
 
 ;; highlight matching parens
 (show-paren-mode 1)
@@ -88,11 +98,9 @@
 (global-set-key "\M-A" 'indent-for-tab-command)
 
 ;; To find lein
-;; http://stackoverflow.com/questions/13671839/cant-launch-lein-repl-in-emacs
 (add-to-list 'exec-path "/usr/local/bin")
 
 ;; buffer list to appear on active window
-;; http://stackoverflow.com/questions/1231188/emacs-list-buffers-behavior
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
 ;; Change the key binding for delete identation
@@ -102,7 +110,7 @@
 (setq erc-auto-query 'window-noselect)
 
 ;; Get rid of "text read only" error when trying to edit with helm
-(setq inhibit-read-only t) 
+(setq inhibit-read-only t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -141,7 +149,9 @@
   (require 'flycheck-clj-kondo)
   :init
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
-  (add-hook 'clojure-mode-hook #'linum-mode)
+  (add-hook 'clojure-mode-hook (if (fboundp 'display-line-numbers-mode)
+                                   #'display-line-numbers-mode
+                                 #'linum-mode))
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
@@ -188,6 +198,7 @@
   (progn
     (add-hook 'emacs-lisp-mode-hook (lambda()
                       (rainbow-delimiters-mode t)))))
+
 ;; highlight, navigate and edit symbols
 (use-package auto-highlight-symbol
   :ensure t
@@ -254,7 +265,6 @@
   :ensure t)
 
 ;;ORG mode
-;; The following lines are always needed. Choose your own keys.
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
@@ -286,10 +296,8 @@
 (add-to-list 'el-get-recipe-path "~/.emacs.d/el-get-user/recipes")
 
 ;; --------------- PYTHON STUFFS
-;; The package is "python" but the mode is "python-mode":
 (use-package python
   :mode ("\\.py\\'" . python-mode)
-;  :interpreter ("python3" . python-mode)
   :init
   (setq python-shell-interpreter "/Library/Frameworks/Python.framework/Versions/3.8/bin/python3"))
 
@@ -298,14 +306,13 @@
   :ensure t
   :after python
   :config (elpy-enable))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (flycheck-joker markdown-mode use-package rainbow-delimiters paredit magit helm-ag exec-path-from-shell elpy cider auto-highlight-symbol))))
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
