@@ -167,6 +167,7 @@
 
 (use-package clojure-mode
   :ensure t
+  :defer nil                            ; load immediately, don't wait
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.cljs\\'" . clojurescript-mode)
          ("\\.cljc\\'" . clojurec-mode)
@@ -194,6 +195,12 @@
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
+
+;; Explicit fallback in case use-package :mode doesn't register
+(add-to-list 'auto-mode-alist '("\.clj\'" . clojure-mode))
+(add-to-list 'auto-mode-alist '("\.cljs\'" . clojurescript-mode))
+(add-to-list 'auto-mode-alist '("\.cljc\'" . clojurec-mode))
+(add-to-list 'auto-mode-alist '("\.edn\'" . clojure-mode))
 
 ;; aggressive-indent handles live re-indentation as you type
 ;; For whole-buffer formatting use C-c C-f (cider-format-buffer) inside a REPL session
