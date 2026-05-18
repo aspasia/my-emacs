@@ -123,11 +123,10 @@
         ido-create-new-buffer 'always
         ido-save-directory-list-file "~/.emacs.d/.ido.last"))
 
-;; smex: ido-style completion for M-x
-(use-package smex
+;; amx: maintained fork of smex, ido-style completion for M-x
+(use-package amx
   :ensure t
-  :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands)))
+  :config (amx-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
