@@ -172,6 +172,10 @@
 (use-package flycheck-clj-kondo
   :ensure t)
 
+(use-package smartparens
+  :ensure t
+  :diminish smartparens-mode)
+
 (use-package aggressive-indent
   :ensure t
   :diminish aggressive-indent-mode)
@@ -202,7 +206,7 @@
                                    #'display-line-numbers-mode
                                  #'linum-mode))
   (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'smartparens-mode)
+  (add-hook 'clojure-mode-hook (lambda () (when (fboundp 'smartparens-mode) (smartparens-mode 1))))
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook (lambda () (when (fboundp 'aggressive-indent-mode) (aggressive-indent-mode 1)))))
