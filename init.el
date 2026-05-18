@@ -25,6 +25,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Force install clojure-mode if not present
+(unless (package-installed-p 'clojure-mode)
+  (package-refresh-contents)
+  (package-install 'clojure-mode))
+
 ;; only use use-package.el at compile-time
 (eval-when-compile
   (require 'use-package))
