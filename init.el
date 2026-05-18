@@ -5,12 +5,10 @@
 (setq package-enable-at-startup nil)
 
 (when (>= emacs-major-version 24)
-  (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                           ("gnu" . "http://elpa.gnu.org/packages/")
-                           ("melpa-stable" . "http://stable.melpa.org/packages/")
-                           ("marmalade" . "http://marmalade-repo.org/packages/")
-                           ("org" . "https://orgmode.org/elpa/")
-                           ("elpy" . "http://jorgenschaefer.github.io/packages/"))))
+  (setq package-archives '(("gnu"          . "https://elpa.gnu.org/packages/")
+                           ("melpa"        . "https://melpa.org/packages/")
+                           ("melpa-stable" . "https://stable.melpa.org/packages/")
+                           ("org"          . "https://orgmode.org/elpa/"))))
 
 ;; Refresh repos
 (unless package-archive-contents
