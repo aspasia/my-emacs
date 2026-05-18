@@ -44,7 +44,18 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; Color themes
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/color-themes")
-(load-theme 'noctilux t)
+;; Load theme but fall back gracefully if not found
+(condition-case nil
+    (load-theme 'noctilux t)
+  (error (message "noctilux theme not found, using default")))
+
+;; Ensure syntax highlighting is on globally
+(global-font-lock-mode t)
+(setq font-lock-maximum-decoration t)
+
+;; Ensure clojure-mode uses full syntax highlighting
+(add-hook 'clojure-mode-hook #'font-lock-mode)
+(add-hook 'clojurescript-mode-hook #'font-lock-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;  Functions
 
