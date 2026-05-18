@@ -140,7 +140,9 @@
 ;; amx: maintained fork of smex, ido-style completion for M-x
 (use-package amx
   :ensure t
-  :config (amx-mode t))
+  :config
+  (amx-mode t)
+  (setq amx-backend 'auto))   ; use default backend, don't try ido-completing-read+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -169,6 +171,10 @@
 
 (use-package flycheck-clj-kondo
   :ensure t)
+
+(use-package aggressive-indent
+  :ensure t
+  :diminish aggressive-indent-mode)
 
 (use-package clojure-mode
   :ensure t
@@ -199,7 +205,7 @@
   (add-hook 'clojure-mode-hook #'smartparens-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
   (add-hook 'clojure-mode-hook #'eldoc-mode)
-  (add-hook 'clojure-mode-hook #'aggressive-indent-mode))
+  (add-hook 'clojure-mode-hook (lambda () (when (fboundp 'aggressive-indent-mode) (aggressive-indent-mode 1)))))
 
 ;; Explicit fallback in case use-package :mode doesn't register
 (add-to-list 'auto-mode-alist '("\.clj\'" . clojure-mode))
