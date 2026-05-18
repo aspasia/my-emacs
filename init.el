@@ -112,6 +112,23 @@
 ;; Get rid of "text read only" error when trying to edit with helm
 (setq inhibit-read-only t)
 
+;; IDO: interactive file and buffer completion
+(use-package ido
+  :config
+  (ido-mode t)
+  (ido-everywhere t)
+  (setq ido-enable-flex-matching t      ; fuzzy matching
+        ido-use-virtual-buffers t       ; include recentf in buffer list
+        ido-auto-merge-work-directories-length -1  ; don't jump to other dirs
+        ido-create-new-buffer 'always
+        ido-save-directory-list-file "~/.emacs.d/.ido.last"))
+
+;; smex: ido-style completion for M-x
+(use-package smex
+  :ensure t
+  :bind (("M-x" . smex)
+         ("M-X" . smex-major-mode-commands)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Use packages
